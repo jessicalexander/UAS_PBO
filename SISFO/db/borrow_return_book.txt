@@ -1,0 +1,4 @@
+User peter has borrowed the book "The Hobbit" on 2024-04-22/nUser peter has borrowed the book "The Hobbit" on 2024-04-22
+User peter has borrowed the book "The Hobbit" on 2024-04-22
+User peter has borrowed the book "1984" on 2024-04-22
+User peter has returned the book "The hobbit" on 2024-04-22

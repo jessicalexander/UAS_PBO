@@ -1,0 +1,37 @@
+2024-04-22 20:11:58,243 - login was called.
+2024-04-22 20:36:21,002 - login was called by Monica.
+2024-04-22 20:36:21,003 - create_user_account was called by Monica.
+2024-04-22 20:37:24,372 - login was called by Monica.
+2024-04-22 20:37:24,374 - create_user_account was called by Monica.
+2024-04-22 20:37:24,375 - add_books was called by E-Library UKRIDA.
+2024-04-22 20:37:24,375 - search_books was called by peter.
+2024-04-22 20:37:24,375 - get_book_results was called by E-Library UKRIDA.
+2024-04-22 20:37:24,376 - view_book_content was called by peter.
+2024-04-22 20:37:24,376 - get_book_content was called by E-Library UKRIDA.
+2024-04-22 20:40:51,985 - login was called by Monica.
+2024-04-22 20:40:51,987 - create_user_account was called by Monica.
+2024-04-22 20:40:51,987 - create_user_account was called by Monica.
+2024-04-22 20:40:51,987 - search_books was called by peter.
+2024-04-22 20:40:51,988 - view_book_content was called by peter.
+2024-04-22 23:29:20,591 - login was called by Monica.
+2024-04-22 23:29:20,594 - create_user_account was called by Monica.
+2024-04-22 23:29:25,241 - login was called by Monica.
+2024-04-22 23:29:25,245 - create_user_account was called by Monica.
+2024-04-22 23:29:25,247 - report_issue was called by jesica.
+2024-04-22 23:29:25,247 - view_tickets was called by Monica.
+2024-04-23 01:45:03,358 - login was called by Monica.
+2024-04-23 01:45:03,359 - create_user_account was called by Monica.
+2024-04-23 01:45:03,359 - submit_certificate was called by peter.
+2024-04-23 02:01:40,390 - login was called by Monica.
+2024-04-23 02:01:40,391 - create_user_account was called by Monica.
+2024-04-23 02:01:40,392 - submit_certificate was called by peter.
+2024-04-23 02:05:10,088 - login was called by Monica.
+2024-04-23 02:05:10,089 - create_user_account was called by Monica.
+2024-04-23 02:05:10,089 - submit_certificate was called by peter.
+2024-04-23 02:05:35,307 - login was called by Monica.
+2024-04-23 02:05:35,308 - create_user_account was called by Monica.
+2024-04-23 02:05:35,308 - submit_certificate was called by peter.
+2024-04-23 02:05:55,272 - login was called by Monica.
+2024-04-23 02:05:55,275 - create_user_account was called by Monica.
+2024-04-23 02:05:55,275 - submit_certificate was called by peter.
+2024-04-23 02:05:55,290 - submit_certificate was called by peter.
