@@ -8,6 +8,16 @@ services:
       - 6397:6379
     networks:
       - siwp2005-service-net
+  
+  redisinsight:
+    image: redis/redisinsight:latest
+    restart: always
+    ports:
+      - 5540:5540
+    volumes:
+      - redisinsight:/data
+    networks:
+      - siwp2005-service-net
     
   mongodb:
     image: mongo
@@ -73,22 +83,22 @@ services:
       - siwp2005-service-net
     command: "sh -c './run.sh'"
 
-#   frontend:
-#     build:
-#       context: ./frontend
-#       dockerfile: Dockerfile
-#       args:
-#         timezone: Asia/Singapore
-#     depends_on:
-#       - mongodb
-#     restart: always
-#     env_file:
-#       - .env
-#     ports:
-#       - 3003:3000
-#     networks:
-#       - siwp2005-service-net
-#     command: "npm run dev"
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        timezone: Asia/Singapore
+    depends_on:
+      - mongodb
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - 3003:3000
+    networks:
+      - siwp2005-service-net
+    command: "npm run dev"
   
 
 volumes:
