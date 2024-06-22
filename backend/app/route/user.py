@@ -1,6 +1,6 @@
 from flask import Blueprint
 from flask_restful import Api
-from resource.user import RegisterAPI, LoginAPI
+from resource.user import RegisterAPI, LoginAPI, UserManagementAPI
 
 
 authz_blueprint = Blueprint("user_api", __name__)
@@ -12,3 +12,8 @@ authz_blueprint_api.add_resource(
 authz_blueprint_api.add_resource(
     LoginAPI, "/login"
 )
+
+authz_blueprint_api.add_resource(
+    UserManagementAPI, "/manage/user"
+)
+
