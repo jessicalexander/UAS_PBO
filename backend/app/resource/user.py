@@ -43,7 +43,7 @@ class LoginAPI(Resource):
             app.logger.error("Error: {}".format(e))
             return {'message': "Server error"}, 500
 
-class UserManagementAPI(Resource):
+class UserManagementListAPI(Resource):
     @jwt_required()
     @role_required(0)  # Only super admin
     def post(self):
@@ -51,6 +51,19 @@ class UserManagementAPI(Resource):
         user = User(**data)
         user.hash_password()
         user.save()
+        return UserSchema().dump(user), 200
+
+    # get all User
+    @jwt_required()
+    @role_required(0)  # Only super admin
+    def get(self):
+        users = User.objects
+        return UserSchema(many=True).dump(users), 200
+class UserManagementAPI(Resource):
+    @jwt_required()
+    @role_required(0)  # Only super admin
+    def get(self, user_id):
+        user = User.objects.get(id=user_id)
         return UserSchema().dump(user), 200
 
     @jwt_required()
@@ -61,5 +74,12 @@ class UserManagementAPI(Resource):
         user.update(**data)
         return UserSchema().dump(user), 200
         
+    @jwt_required()
+    @role_required(0)  # Only super admin
+    def delete(self, user_id):
+        user = User.objects.get(id=user_id)
+        user.delete()
+        msg = {"message": f"User {user_id} deleted"} 
+        return msg, 200
 
 
