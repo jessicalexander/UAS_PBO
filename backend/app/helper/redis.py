@@ -2,7 +2,7 @@ import json
 
 from helper import get_redis_engine
 
-def init_value(name, value):
+def add_value(name, value):
     payload = json.dumps(value)
     redis = get_redis_engine()
     # For initialize the publisher
