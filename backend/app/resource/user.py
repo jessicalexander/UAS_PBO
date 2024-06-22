@@ -2,12 +2,11 @@ from flask import request
 from datetime import timedelta
 from flask_restful import Resource
 from mongoengine.errors import FieldDoesNotExist, NotUniqueError, DoesNotExist
-
 from marshmallow.exceptions import ValidationError
 from helper.schema import UserSchema, LoginSchema
 from model.user import User
-
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+from helper.rbac import role_required  # Import the decorator
 
 from flask import current_app as app
 
@@ -43,6 +42,24 @@ class LoginAPI(Resource):
         except Exception as e:
             app.logger.error("Error: {}".format(e))
             return {'message': "Server error"}, 500
+
+class UserManagementAPI(Resource):
+    @jwt_required()
+    @role_required(0)  # Only super admin
+    def post(self):
+        data = request.get_json()
+        user = User(**data)
+        user.hash_password()
+        user.save()
+        return UserSchema().dump(user), 200
+
+    @jwt_required()
+    @role_required(0)  # Only super admin
+    def put(self, user_id):
+        data = request.get_json()
+        user = User.objects.get(id=user_id)
+        user.update(**data)
+        return UserSchema().dump(user), 200
         
 
 
