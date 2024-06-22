@@ -104,6 +104,7 @@ services:
 volumes:
   mongodbdata:
     driver: local
+  redisinsight:
 
 networks:
   siwp2005-service-net:
