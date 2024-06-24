@@ -7,8 +7,8 @@ from mongoengine.errors import NotUniqueError
 from werkzeug.exceptions import UnprocessableEntity, Conflict
 
 import helper.validator as validator
-from model.course import Course, User, Bulletin
-from helper.schema import CourseSchema, BulletinSchema
+from model.course import Course, User, Bulletin, Attendance
+from helper.schema import CourseSchema, BulletinSchema, AttendanceSchema
 
 class CourseListAPI(Resource):
     @jwt_required()
@@ -68,7 +68,19 @@ class BulletinAPI(Resource):
     #TODO:
     # CRUD
 
+class AttendanceAPI(Resource):
+    @jwt_required()
+    def post(self):
+        try:
+            data = request.get_json()
+            course_name = data["course_name"]
+            student_name = data ["student_name"]
+            attendance = data["attendance"]
+            tahapan = Attendance(course_name=course_name, student_name=student_name, attendance=attendance)
+            tahapan.save()
+            serialized = AttendanceSchema().dump(tahapan)
+            return serialized, 200
+        except Exception as e:
+            return {'message': str(e)}, 422
 
-        
-
-            
+                    

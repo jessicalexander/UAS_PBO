@@ -50,4 +50,8 @@ class BulletinSchema(ma.Schema):
     content = fields.String(required=False)
     # course = fields.Nested(Course, dump_only=True)
 
-
+class AttendanceSchema(ma.Schema):
+    id = fields.String(dump_only=True)
+    course_name = fields.String(required=True)
+    student_name= fields.String(required=True)
+    attendance= fields.Bool(required=False, default=True)

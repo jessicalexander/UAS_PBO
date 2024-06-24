@@ -13,3 +13,10 @@ class Bulletin(db.Document):
     name = db.StringField(required=True)
     content =  db.StringField(required=False)
     # course = db.ReferenceField(Course)
+
+class Attendance(db.Document):
+    course_name = db.StringField(required=True)
+    student_name= db.StringField(required=True)
+    attendance= db.BooleanField(required=False, default=True)
+
+
