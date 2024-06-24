@@ -89,7 +89,7 @@ class AttendanceAPI(Resource):
         serialized_payload = AttendanceSchema().dump(attendance)
         return serialized_payload, 200 
 
-class Course_Activity(Resource):
+class Course_ActivityAPI(Resource):
     @jwt_required()
     def post(self):
         try:
@@ -110,7 +110,7 @@ class Course_Activity(Resource):
         serialized_payload = Course_ActivitySchema().dump(course_name)
         return serialized_payload, 200
 
-class Score(Resource):
+class ScoreAPI(Resource):
     @jwt_required()
     def post(self):
         try:

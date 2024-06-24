@@ -1,6 +1,6 @@
 from flask import Blueprint
 from flask_restful import Api
-from resource.course import CourseAPI, CourseListAPI,BulletinAPI, BulletinListAPI, AttendanceAPI
+from resource.course import CourseAPI, CourseListAPI,BulletinAPI, BulletinListAPI, AttendanceAPI, Course_ActivityAPI, ScoreAPI
 
 
 course_blueprint = Blueprint("course_api", __name__)
@@ -30,13 +30,16 @@ course_blueprint_api.add_resource(
 )
 
 course_blueprint_api.add_resource(
-    AttendanceAPI, "/course_activity"
+    Course_ActivityAPI, "/course_activity"
 )
 
 course_blueprint_api.add_resource(
-    AttendanceAPI, "/course_activity/<string:student_name>"
+    ScoreAPI, "/Score"
+)
+course_blueprint_api.add_resource(
+    ScoreAPI, "/Score/<string:student_name>"
 )
 
 course_blueprint_api.add_resource(
-    AttendanceAPI, "/course_activity/<string:course_name>"
+    ScoreAPI, "/Score/<string:course_name>"
 )
