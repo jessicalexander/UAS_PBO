@@ -25,3 +25,18 @@ course_blueprint_api.add_resource(
     AttendanceAPI, "/attendance"
 )
 
+course_blueprint_api.add_resource(
+    AttendanceAPI, "/attendance/<string:student_name>"
+)
+
+course_blueprint_api.add_resource(
+    AttendanceAPI, "/course_activity"
+)
+
+course_blueprint_api.add_resource(
+    AttendanceAPI, "/course_activity/<string:student_name>"
+)
+
+course_blueprint_api.add_resource(
+    AttendanceAPI, "/course_activity/<string:course_name>"
+)
