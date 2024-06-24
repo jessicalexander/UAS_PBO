@@ -7,8 +7,8 @@ from mongoengine.errors import NotUniqueError
 from werkzeug.exceptions import UnprocessableEntity, Conflict
 
 import helper.validator as validator
-from model.course import Course, User, Bulletin, Attendance
-from helper.schema import CourseSchema, BulletinSchema, AttendanceSchema
+from model.course import Course, User, Bulletin, Attendance, Course_Activity, Score
+from helper.schema import CourseSchema, BulletinSchema, AttendanceSchema, Course_ActivitySchema, ScoreSchema
 
 class CourseListAPI(Resource):
     @jwt_required()
@@ -82,5 +82,91 @@ class AttendanceAPI(Resource):
             return serialized, 200
         except Exception as e:
             return {'message': str(e)}, 422
+        
+    @jwt_required()
+    def get(self, student_name):
+        attendance = Attendance.objects.get(name=student_name)
+        serialized_payload = AttendanceSchema().dump(attendance)
+        return serialized_payload, 200 
 
-                    
+class Course_Activity(Resource):
+    @jwt_required()
+    def post(self):
+        try:
+            data = request.get_json()
+            course_name = data["course_name"]
+            activity_type = data ["activity_type"]
+            deadline = data["deadline"]
+            tahapan = Course_Activity(course_name=course_name, activity_type=activity_type, deadline=deadline)
+            tahapan.save()
+            serialized = Course_ActivitySchema().dump(tahapan)
+            return serialized, 200
+        except Exception as e:
+            return {'message': str(e)}, 422
+
+    @jwt_required()
+    def get(self, course_name):
+        course_name = Course_Activity.objects.get(course=course_name)
+        serialized_payload = Course_ActivitySchema().dump(course_name)
+        return serialized_payload, 200
+
+class Score(Resource):
+    @jwt_required()
+    def post(self):
+        try:
+            data = request.get_json()
+            course_name = data["course_name"]
+            activity_type = data ["activity_type"]
+            student_name = data ["student_name"]
+            score = data ["score"]
+            tahapan = Score(course_name=course_name, activity_type=activity_type, student_name=student_name, score=score)
+            tahapan.save()
+            serialized = ScoreSchema().dump(tahapan)
+            return serialized, 200
+        except Exception as e:
+            return {'message': str(e)}, 422
+        
+    @jwt_required()
+    def post(self):
+        try:
+            data = request.get_json()
+            course_name = data["course_name"]
+            activity_type = data["activity_type"]
+            student_name = data["student_name"]
+            score = data["score"]
+            tahapan = Score(course_name=course_name, activity_type=activity_type, student_name=student_name, score=score)
+            tahapan.save()
+            serialized = ScoreSchema().dump(tahapan)
+            return serialized, 200
+        except Exception as e:
+            return {'message': str(e)}, 422
+    
+    @jwt_required()
+    def put(self, score_id):
+        try:
+            score = Score.objects.get(id=score_id)
+            user = User.objects.get(id=get_jwt_identity())
+            serialized_payload = validator.update_score()
+            for key, value in serialized_payload.items():
+                setattr(score, key, value)
+            score.save()
+            serialized_payload = ScoreSchema().dump(score)
+            return serialized_payload, 200
+        except Exception as e:
+            return {'message': str(e)}, 422
+        
+    def get(self, student_name): #search score by student
+        try:
+            scores = Score.objects.filter(student_name=student_name)
+            serialized = ScoreSchema(many=True).dump(scores)
+            return serialized, 200
+        except Exception as e:
+            return {'message': str(e)}, 422
+        
+    def get(self, course_name): #search score by course
+        try:
+            scores = Score.objects.filter(course_name=course_name)
+            serialized = ScoreSchema(many=True).dump(scores)
+            return serialized, 200
+        except Exception as e:
+            return {'message': str(e)}, 422    

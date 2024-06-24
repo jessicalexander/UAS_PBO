@@ -56,3 +56,16 @@ class AttendanceSchema(ma.Schema):
     course_name = fields.String(required=True)
     student_name= fields.String(required=True)
     attendance= fields.Bool(required=False, default=True)
+
+class Course_ActivitySchema(ma.Schema):
+    id = fields.String(dump_only=True)
+    course_name=fields.String(required=True)
+    activity_type=fields.String(required=True)
+    deadline=fields.String(required=True)
+
+class ScoreSchema(ma.Schema):
+    id = fields.String(dump_only=True)
+    course_name = fields.String(required=True)
+    activity_type=fields.String(required=True)
+    student_name= fields.String(required=True)
+    score=fields.Integer(blank=True, null=True)

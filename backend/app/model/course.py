@@ -21,3 +21,13 @@ class Attendance(db.Document):
     attendance= db.BooleanField(required=False, default=True)
 
 
+class Course_Activity(db.Document):
+    course_name=db.StringField(required=True) 
+    activity_type=db.StringField(required=True) #could be assignment, could be exam (UAS/UTS)
+    deadline=db.StringField(required=True)
+
+class Score(db.Document):
+    course_name = db.StringField(required=True)
+    activity_type=db.StringField(required=True)
+    student_name= db.StringField(required=True)
+    score = db.IntField(blank=True, null=True) #so that the field is provided but we can leave it as blank/null before updating
