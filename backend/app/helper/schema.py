@@ -38,6 +38,7 @@ class CourseSchema(ma.Schema):
     semester = fields.String(required=True)
     nama_mk = fields.String(required=False)
     sks = fields.Integer(required=False)
+    nama_prof = fields.Integer(required=False)
     description = fields.String(required=False)
     user = fields.Nested(UserSchema, required=True, dump_only=True)
     

@@ -7,6 +7,7 @@ class Course(db.Document):
     semester = db.StringField(required=True)
     nama_mk = db.StringField(required=False)
     sks = db.IntField(required=False)
+    nama_prof = db.IntField(required=False)
     description = db.StringField(required=False)
     
 class Bulletin(db.Document):

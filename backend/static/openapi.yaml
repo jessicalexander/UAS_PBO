@@ -156,6 +156,7 @@ paths:
                 "semester": "2",
                 "nama_mk": "OOP",
                 "sks": "6",
+                "nama_prof": "Pak Hendrik",
                 "description": "OOP course"
             }'
         ```
