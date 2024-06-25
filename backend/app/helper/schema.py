@@ -69,3 +69,8 @@ class ScoreSchema(ma.Schema):
     activity_type=fields.String(required=True)
     student_name= fields.String(required=True)
     score=fields.Integer(blank=True, null=True)
+
+class AnnouncementSchema(ma.Schema):
+    content_announcement = fields.String(required=True)
+    calender_announcement = fields.Date(required=True)
+    description = fields.String(required=True)

@@ -26,6 +26,8 @@ tags:
     description: Endpoint for managing user
   - name: Courses
     description: Endpoint for managing courses
+  - name: Announcement
+    description: Endpoint for managing announcement
 
 paths:
   /user:
@@ -942,6 +944,160 @@ paths:
                     type: string
                     description: "error description"
                     example: "Server Error"
+  /announcement:
+    get:
+      tags:
+        - Announcement
+      summary: Get Announcement
+      security:
+        - BearerAuth: []
+      description: |
+        Get course resource
+        ```
+        curl --location --request GET '`${url}`/api/v1/announcement' \
+            --header 'Content-Type: application/json' \
+            --header 'Authorization: Bearer {TOKEN} \
+        ```
+      responses:
+        "200":
+          description: "Success response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Announcement"
+
+        "default":
+          description: |
+            ```
+            400 - Bad Request
+            401 - Unauthorized
+            403 - Forbidden
+            404 - Not Found
+            422 - Unprocessable Entity
+            500 - Error on server
+            ```
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    description: "error description"
+                    example: "Server Error"
+
+#     post:
+#       tags:
+#         - Announcement
+#       summary: content
+#       description: |
+#         Create endpoint
+#         ```
+#         curl --location --request POST '`${url}`/api/v1/announcement' \
+#             --header 'Content-Type: application/json' \
+#             --data-raw '{
+#                 "content_announcement": "string"
+#             }'
+#         ```
+#       requestBody:
+#         content:
+#           application/json:
+#             schema:
+#               type: object
+#               properties:
+#                 content_announcement:
+#                   type: string
+#                 description:
+#                   type: string
+#       responses:
+#         "200":
+#           description: "Success response"
+#           content:
+#             application/json:
+#               schema:
+#                 $ref: "#/components/schemas/Announcementobject1"
+#                 type: object
+#                 properties:
+#                   username:
+#                     type: string
+#                   id:
+#                     type: string
+#         "default":
+#           description: |
+#             ```
+#             400 - Bad Request
+#             401 - Unauthorized
+#             403 - Forbidden
+#             404 - Not Found
+#             422 - Unprocessable Entity
+#             500 - Error on server
+#             ```
+#           content:
+#             application/json:
+#               schema:
+#                 $ref: "#/components/schemas/Announcementobject1"
+#                 type: object
+#                 properties:
+#                   detail:
+#                     type: string
+#                     description: "error description"
+#                     example: "Server Error"
+#   /calender_announcement:
+#     post:
+#         tags:
+#           - Announcement
+#         summary: calender
+#         description: |
+#           calender_announcement endpoint
+#           ```
+#           curl --location --request POST '`${url}`/api/v1/announcement' \
+#               --header 'Content-Type: application/json' \
+#               --data-raw '{
+#                   "calender_announcement": "date_type""
+#               }'
+#           ```
+#         requestBody:
+#           content:
+#             application/json:
+#               schema:
+#                 $ref: "#/components/schemas/Announcementobject2"
+#                 type: object
+#                 properties:
+#                   calender_announcement:
+#                     type: string
+#                   description:
+#                     type: string
+#         responses:
+#           "200":
+#             description: "Success response"
+#             content:
+#               application/json:
+#                 schema:
+#                   $ref: "#/components/schemas/Announcementobject2"
+#                   type: object
+#                   properties:
+#                     token:
+#                       type: string
+#           "default":
+#             description: |
+#               ```
+#               400 - Bad Request
+#               401 - Unauthorized
+#               403 - Forbidden
+#               404 - Not Found
+#               422 - Unprocessable Entity
+#               500 - Error on server
+#               ```
+#             content:
+#               application/json:
+#                 schema:
+#                   type: object
+#                   properties:
+#                     detail:
+#                       type: string
+#                       description: "error description"
+#                       example: "Server Error"
+
 components:
   schemas:
     CourseObject:
@@ -1059,7 +1215,23 @@ components:
         Score:
           type: string
           example: ""
-      
+
+    Announcement:
+      type: object
+      required:
+          - content_announcement
+          - calender_announcement
+          - description
+      properties:
+        content_announcement:
+          type: string
+          example: "hai hai hari ini adalah pengumpulan terakhir UAS, JANGAN SAMPAI TERLEWAT YA!!"
+        calender_announcement:
+          type: string
+          example: "date_type"
+        description:
+          type: string
+          example: "string"    
 
   securitySchemes:
     BearerAuth: # arbitrary name for the security scheme
