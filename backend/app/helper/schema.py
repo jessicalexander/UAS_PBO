@@ -69,3 +69,14 @@ class ScoreSchema(ma.Schema):
     activity_type=fields.String(required=True)
     student_name= fields.String(required=True)
     score=fields.Integer(blank=True, null=True)
+
+class Create_announcementSchema(ma.Schema):
+    id = fields.String(dump_only=True)
+    grade_announcement = fields.Integer(blank=True, null=True)
+    courses_announcement = fields.String(required=True)
+    description = fields.String(required=False)
+
+class View_announcementSchema(ma.Schema):
+    id = fields.String(dump_only=True)
+    grade_announcement = fields.Integer(blank=True, null=True)
+    courses_announcement = fields.String(required=True)

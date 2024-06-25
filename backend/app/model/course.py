@@ -31,3 +31,4 @@ class Score(db.Document):
     activity_type=db.StringField(required=True)
     student_name= db.StringField(required=True)
     score = db.IntField(blank=True, null=True) #so that the field is provided but we can leave it as blank/null before updating
+

@@ -8,7 +8,7 @@ from werkzeug.exceptions import UnprocessableEntity, Conflict
 
 import helper.validator as validator
 from model.course import Course, User, Bulletin, Attendance, Course_Activity, Score
-from helper.schema import CourseSchema, BulletinSchema, AttendanceSchema, Course_ActivitySchema, ScoreSchema
+from helper.schema import CourseSchema, BulletinSchema, AttendanceSchema, Course_ActivitySchema, ScoreSchema,Create_announcementSchema, View_announcementSchema
 
 class CourseListAPI(Resource):
     @jwt_required()
@@ -159,4 +159,6 @@ class ScoreCourseListAPI(Resource):
             serialized = ScoreSchema(many=True).dump(scores)
             return serialized, 200
         except Exception as e:
-            return {'message': str(e)}, 422    
+            return {'message': str(e)}, 422  
+
+
