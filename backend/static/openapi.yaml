@@ -28,6 +28,8 @@ tags:
     description: Endpoint for managing courses
   - name: Announcement
     description: Endpoint for managing announcement
+  - name: Billing
+    description: Endpoint for managing billing
 
 paths:
   /user:
