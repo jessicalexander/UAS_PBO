@@ -69,3 +69,11 @@ class ScoreSchema(ma.Schema):
     activity_type=fields.String(required=True)
     student_name= fields.String(required=True)
     score=fields.Integer(blank=True, null=True)
+
+class BillingSchema(ma.Schema):
+    id = fields.String(dump_only=True)
+    student_name= fields.String(required=True)
+    billing = fields.Integer(blank=True, null=True)
+    description = fields.String(required=False)
+    status = fields.String(required=False)
+    
