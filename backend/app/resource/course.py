@@ -86,9 +86,26 @@ class AttendanceAPI(Resource):
 class AttendanceListAPI(Resource):    
     @jwt_required()
     def get(self, student_name):
-        attendance = Attendance.objects.get(name=student_name)
+        attendance = Attendance.objects.get(student_name=student_name)
         serialized_payload = AttendanceSchema().dump(attendance)
         return serialized_payload, 200 
+    
+    @jwt_required()
+    def put(self, student_name):
+        attendance = Attendance.objects.get(student_name=student_name)
+        payload = request.get_json()
+        schema = AttendanceSchema()
+        try:
+            validated_data = schema.load(payload, partial=True)
+        except ValidationError as err:
+            return err.messages, 400\
+            
+        for key, value in validated_data.items():
+            setattr(attendance, key, value)
+        attendance.save()
+        
+        serialized_payload = schema.dump(attendance)
+        return serialized_payload, 200
 
 class Course_ActivityAPI(Resource):
     @jwt_required()
@@ -105,10 +122,41 @@ class Course_ActivityAPI(Resource):
         except Exception as e:
             return {'message': str(e)}, 422
         
+class Course_ActivityIdAPI(Resource):
+    @jwt_required()
+    def put(self, course_activity_id):
+        try:
+            data = request.get_json()
+            course_activity = Course_Activity.objects.get(id=course_activity_id)
+
+            if 'activity_type' in data:
+                course_activity.activity_type = data['activity_type']
+            
+            if 'deadline' in data:
+                course_activity.deadline = data['deadline']
+            
+            course_activity.save()
+            serialized = Course_ActivitySchema().dump(course_activity)
+            return serialized, 200
+        except Course_Activity.DoesNotExist:
+            return {'message': 'Course activity not found'}, 404
+        except Exception as e:
+            return {'message': str(e)}, 422
+        
+    def delete(self, course_activity_id):
+        try:
+            course_activity = Course_Activity.objects.get(id=course_activity_id)
+            course_activity.delete()
+            return {'message': 'Course activity deleted successfully'}, 200
+        except Course_Activity.DoesNotExist:
+            return {'message': 'Course activity not found'}, 404
+        except Exception as e:
+            return {'message': str(e)}, 422
+        
 class Course_ActivityListAPI(Resource):
     @jwt_required()
     def get(self, course_name):
-        course_name = Course_Activity.objects.get(course=course_name)
+        course_name = Course_Activity.objects.get(course_name=course_name)
         serialized_payload = Course_ActivitySchema().dump(course_name)
         return serialized_payload, 200
 

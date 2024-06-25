@@ -378,6 +378,570 @@ paths:
                     type: string
                     description: "error description"
                     example: "Server Error"
+
+  /attendance:
+    post:
+      tags:
+        - Courses
+      summary: Add Attendance
+      security:
+        - BearerAuth: []
+      description: |
+        Create new attendance
+        ```
+        curl --location --request POST '`${url}`/api/v1/attendance' \
+            --header 'Content-Type: application/json' \
+            --header 'Authorization: Bearer {TOKEN} \
+            --data-raw '{
+                "course_name": "OOP",
+                "student_name": "Ucup",
+                "attendance": true
+            }'
+        ```
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Attendance"
+
+      responses:
+        "200":
+          description: "Success response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Attendance"
+
+        "default":
+          description: |
+            ```
+            400 - Bad Request
+            401 - Unauthorized
+            403 - Forbidden
+            404 - Not Found
+            422 - Unprocessable Entity
+            500 - Error on server
+            ```
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    description: "error description"
+                    example: "Server Error"
+    
+  /attendance/{student_name}:
+    parameters:
+      - name: student_name
+        in: path
+        required: true
+        schema:
+          type: string
+
+    get:
+      tags:
+        - Courses
+      summary: Get attendance by student's name
+      security:
+        - BearerAuth: []
+      description: |
+        Get Student's attendance
+        ```
+        curl --location --request GET '`${url}`/api/v1/attendance/{student_name}' \
+            --header 'Content-Type: application/json' \
+            --header 'Authorization: Bearer {TOKEN} \
+        ```
+      responses:
+        "200":
+          description: "Success response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Attendance"
+
+        "default":
+          description: |
+            ```
+            400 - Bad Request
+            401 - Unauthorized
+            403 - Forbidden
+            404 - Not Found
+            422 - Unprocessable Entity
+            500 - Error on server
+            ```
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    description: "error description"
+                    example: "Server Error"
+    put:
+      tags:
+        - Courses
+      summary: "Edit Attendance by student's name"
+      security:
+        - BearerAuth: []
+      description: |
+        Edit the details of student's attendance
+        ```
+        curl --location --request PUT '`${url}`/api/v1/attendance/{student_name}' \
+            --header 'Content-Type: application/json' \
+            --header 'Authorization: Bearer {TOKEN} \
+            --data-raw '{
+                "course_name": "OOP",
+                "student_name": "Ucup",
+                "attendance": true
+            }'
+        ```
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Attendance"
+
+      responses:
+        "200":
+          description: "Edit Courses Success response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Attendance"
+
+        "default":
+          description: |
+            ```
+            400 - Bad Request
+            401 - Unauthorized
+            403 - Forbidden
+            404 - Not Found
+            422 - Unprocessable Entity
+            500 - Error on server
+            ```
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    description: "error description"
+                    example: "Server Error"
+  /course_activity:
+    post:
+      tags:
+        - Courses
+      summary: Add Course Activity
+      security:
+        - BearerAuth: []
+      description: |
+        Create new activity
+        ```
+        curl --location --request POST '`${url}`/api/v1/course_activity' \
+            --header 'Content-Type: application/json' \
+            --header 'Authorization: Bearer {TOKEN} \
+            --data-raw '{
+                "course_name": "OOP",
+                "activity_tupe": "UAS",
+                "deadline": "30/6/2024 23:59""
+            }'
+        ```
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Course_Activity"
+
+      responses:
+        "200":
+          description: "Success response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Course_Activity"
+
+        "default":
+          description: |
+            ```
+            400 - Bad Request
+            401 - Unauthorized
+            403 - Forbidden
+            404 - Not Found
+            422 - Unprocessable Entity
+            500 - Error on server
+            ```
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    description: "error description"
+                    example: "Server Error"
+
+  /course_activity/{course_activity_id}:
+    parameters:
+      - name: course_activity_id
+        in: path
+        required: true
+        schema:
+          type: string
+    
+    put:
+      tags:
+        - Courses
+      summary: "Edit course activity by id"
+      security:
+        - BearerAuth: []
+      description: |
+        Edit a course activity details
+        ```
+        curl --location --request PUT '`${url}`/api/v1/course_activity/{course_activity_id}' \
+            --header 'Content-Type: application/json' \
+            --header 'Authorization: Bearer {TOKEN} \
+            --data-raw '{
+                "course_name": "OOP",
+                "activity_tupe": "UAS",
+                "deadline": "3/7/2024 23:59""
+            }'
+        ```
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Course_Activity"
+
+      responses:
+        "200":
+          description: "Edit Courses Success response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Course_Activity"
+
+        "default":
+          description: |
+            ```
+            400 - Bad Request
+            401 - Unauthorized
+            403 - Forbidden
+            404 - Not Found
+            422 - Unprocessable Entity
+            500 - Error on server
+            ```
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    description: "error description"
+                    example: "Server Error"
+    delete:
+      tags:
+        - Courses
+      summary: Delete Course Activity By ID
+      security:
+        - BearerAuth: []
+      description: |
+        Delete Courses activity by ID
+        ```
+        curl --location --request DELETE '`${url}`/api/v1/course_activity/{course_id}' \
+            --header 'Content-Type: application/json' \
+            --header 'Authorization: Bearer {TOKEN} \
+        ```
+      responses:
+        "200":
+          description: Course successfully deleted
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Success
+
+        "default":
+          description: |
+            ```
+            400 - Bad Request
+            401 - Unauthorized
+            403 - Forbidden
+            404 - Not Found
+            422 - Unprocessable Entity
+            500 - Error on server
+            ```
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: Resource not exist
+
+  /course_activity/{course_name}:
+    parameters:
+      - name: course_name
+        in: path
+        required: true
+        schema:
+          type: string
+
+    get:
+      tags:
+        - Courses
+      summary: Get course activity by course name
+      security:
+        - BearerAuth: []
+      description: |
+        Get Course's activity
+        ```
+        curl --location --request GET '`${url}`/api/v1/course_activity/{course_name}' \
+            --header 'Content-Type: application/json' \
+            --header 'Authorization: Bearer {TOKEN} \
+        ```
+      responses:
+        "200":
+          description: "Success response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Course_Activity"
+
+        "default":
+          description: |
+            ```
+            400 - Bad Request
+            401 - Unauthorized
+            403 - Forbidden
+            404 - Not Found
+            422 - Unprocessable Entity
+            500 - Error on server
+            ```
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    description: "error description"
+                    example: "Server Error"
+  /score:
+    post:
+      tags:
+        - Courses
+      summary: Add score
+      security:
+        - BearerAuth: []
+      description: |
+        Create new score
+        ```
+        curl --location --request POST '`${url}`/api/v1/score' \
+            --header 'Content-Type: application/json' \
+            --header 'Authorization: Bearer {TOKEN} \
+            --data-raw '{
+                "course_name": "OOP",
+                "activity_type": "UAS",
+                "student_name": "Ucup",
+                "score": ""
+            }'
+        ```
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Score"
+
+      responses:
+        "200":
+          description: "Success response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Score"
+
+        "default":
+          description: |
+            ```
+            400 - Bad Request
+            401 - Unauthorized
+            403 - Forbidden
+            404 - Not Found
+            422 - Unprocessable Entity
+            500 - Error on server
+            ```
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    description: "error description"
+                    example: "Server Error"
+
+  /score/{score_id}:
+    parameters:
+      - name: score_id
+        in: path
+        required: true
+        schema:
+          type: string
+
+    put:
+      tags:
+        - Courses
+      summary: "Edit Score Input"
+      security:
+        - BearerAuth: []
+      description: |
+        Edit the score input
+        ```
+        curl --location --request PUT '`${url}`/api/v1/score/{score_id}' \
+            --header 'Content-Type: application/json' \
+            --header 'Authorization: Bearer {TOKEN} \
+            --data-raw '{
+                "course_name": "OOP",
+                "activity_type": "UAS",
+                "student_name": "Ucup",
+                "score": "100"
+            }'
+        ```
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Score"
+
+      responses:
+        "200":
+          description: "Edit Courses Success response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Score"
+
+        "default":
+          description: |
+            ```
+            400 - Bad Request
+            401 - Unauthorized
+            403 - Forbidden
+            404 - Not Found
+            422 - Unprocessable Entity
+            500 - Error on server
+            ```
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    description: "error description"
+                    example: "Server Error"
+
+  /score/{student_name}:
+    parameters:
+      - name: student_name
+        in: path
+        required: true
+        schema:
+          type: string
+
+    get:
+      tags:
+        - Courses
+      summary: Get score by student name
+      security:
+        - BearerAuth: []
+      description: |
+        Get specific stduent's score list
+        ```
+        curl --location --request GET '`${url}`/api/v1/score/{student_name}' \
+            --header 'Content-Type: application/json' \
+            --header 'Authorization: Bearer {TOKEN} \
+        ```
+      responses:
+        "200":
+          description: "Success response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Score"
+
+        "default":
+          description: |
+            ```
+            400 - Bad Request
+            401 - Unauthorized
+            403 - Forbidden
+            404 - Not Found
+            422 - Unprocessable Entity
+            500 - Error on server
+            ```
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    description: "error description"
+                    example: "Server Error"
+
+  /score/{course_name}:
+    parameters:
+      - name: course_name
+        in: path
+        required: true
+        schema:
+          type: string
+
+    get:
+      tags:
+        - Courses
+      summary: Get score list by course name
+      security:
+        - BearerAuth: []
+      description: |
+        Get Course's score list
+        ```
+        curl --location --request GET '`${url}`/api/v1/score/{course_name}' \
+            --header 'Content-Type: application/json' \
+            --header 'Authorization: Bearer {TOKEN} \
+        ```
+      responses:
+        "200":
+          description: "Success response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Score"
+
+        "default":
+          description: |
+            ```
+            400 - Bad Request
+            401 - Unauthorized
+            403 - Forbidden
+            404 - Not Found
+            422 - Unprocessable Entity
+            500 - Error on server
+            ```
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    description: "error description"
+                    example: "Server Error"
 components:
   schemas:
     CourseObject:
@@ -441,6 +1005,61 @@ components:
         description:
           description: course description
           type: string
+    
+    Attendance:
+      type: object
+      required:
+          - course_name
+          - student_name
+          - attendance
+      properties:
+        course_name:
+          type: string
+          example: "OOP"
+        student_name:
+          type: string
+          example: "Ucup"
+        attendance:
+          type: boolean
+          example: true
+
+    Course_Activity:
+      type: object
+      required:
+          - course_name
+          - activity_type
+          - deadline
+      properties:
+        course_name:
+          type: string
+          example: "OOP"
+        activity_type:
+          type: string
+          example: "UAS"
+        deadline:
+          type: string
+          example: "30/6/2024 23:59"
+
+    Score:
+      type: object
+      required:
+          - course_name
+          - activity_type
+          - student_name
+      properties:
+        course_name:
+          type: string
+          example: "OOP"
+        activity_type:
+          type: string
+          example: "UAS"
+        student_name:
+          type: string
+          example: "Ucup"
+        Score:
+          type: string
+          example: ""
+      
 
   securitySchemes:
     BearerAuth: # arbitrary name for the security scheme
