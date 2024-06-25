@@ -441,6 +441,33 @@ components:
         description:
           description: course description
           type: string
+    
+    Announcement:
+      type: object
+      required:
+          - content_announcement
+          - calender_announcement
+          - description
+      properties:
+        content_announcement:
+          type: string
+          example: "hai hai hari ini adalah pengumpulan terakhir UAS, JANGAN SAMPAI TERLEWAT YA!!"
+        calender_announcement:
+          type: string
+          example: "date_type"
+        description:
+          type: string
+          example: "string"
+
+      
+    ErrorResponse:
+      type: object
+      properties:
+        detail:
+          type: string
+          description: Error description
+          example: "Server Error"
+
 
   securitySchemes:
     BearerAuth: # arbitrary name for the security scheme
