@@ -76,4 +76,24 @@ class BillingSchema(ma.Schema):
     billing = fields.Integer(blank=True, null=True)
     description = fields.String(required=False)
     status = fields.String(required=False)
+
+class LibrarySchema(ma.Schema):
+    id = fields.String(dump_only=True)
+    type= fields.String(required=True)
+    description= fields.String(required=False)
     
+class BookSchema(ma.Schema):
+    id = fields.String(dump_only=True)
+    title= fields.String(required=True)
+    author= fields.String(required=True)
+    publisher= fields.String(required=False)
+    publication_year = fields.Integer(blank=True, null=True)
+    genre= fields.String(required=True)
+    description= fields.String(required=False)
+
+class JournalSchema(ma.Schema):
+    id = fields.String(dump_only=True)
+    title= fields.String(required=True)
+    author= fields.String(required=True)
+    publication_year = fields.Integer(blank=True, null=True)
+    description= fields.String(required=False)
