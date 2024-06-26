@@ -31,7 +31,9 @@ tags:
   - name: Billings
     description: Endpoint for managing billing
   - name: ETicket
-    description: Endpoint for managin e-ticket
+    description: Endpoint for managing e-ticket
+  - name: Library
+    description: Endpoint for managing e-library
 
 paths:
   /user:
@@ -1147,10 +1149,61 @@ paths:
                     type: string
                     description: "error description"
                     example: "Server Error"
+  /billings/{status}:
+    parameters:
+        - name: status
+          in: path
+          required: true
+          schema:
+            type: string
+    get:
+      tags:
+        - Billings
+      summary: Get All Billings by status (paid or unpaid)
+      security:
+        - BearerAuth: []
+      description: |
+        Get billing resource
+        ```
+        curl --location --request GET '`${url}`/api/v1/billings' \
+            --header 'Content-Type: application/json' \
+            --header 'Authorization: Bearer {TOKEN} \
+        ```
+      responses:
+        "200":
+          description: "Success response"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Billing"
+        "default":
+          description: |
+            ```
+            400 - Bad Request
+            401 - Unauthorized
+            403 - Forbidden
+            404 - Not Found
+            422 - Unprocessable Entity
+            500 - Error on server
+            ```
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    description: "error description"
+                    example: "Server Error"
 
   /billing/{student_name}:
     parameters:
-      - name: billings
+      - name: student_name
         in: path
         required: true
         schema:
@@ -1370,6 +1423,12 @@ paths:
                     example: "Kesalahan Server"
 
   /eticket/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
     delete:
       tags:
         - ETicket
@@ -1430,7 +1489,590 @@ paths:
                     type: string
                     description: "deskripsi kesalahan"
                     example: "Kesalahan Server"
+  
+  /books:
+    get:
+      tags:
+        - Library
+      summary: Get all books
+      security:
+        - BearerAuth: []
+      description: |
+        Get all books in library
+        ```
+        curl --location --request GET '`${url}`/api/v1/book' \
+            --header 'Content-Type: application/json' \
+            --header 'Authorization: Bearer {TOKEN} \
+        ```
+      responses:
+        "200":
+          description: "Success response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Book"
 
+        "default":
+          description: |
+            ```
+            400 - Bad Request
+            401 - Unauthorized
+            403 - Forbidden
+            404 - Not Found
+            422 - Unprocessable Entity
+            500 - Error on server
+            ```
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    description: "error description"
+                    example: "Server Error"
+
+    post:
+      tags:
+        - Library
+      summary: Add new book
+      security:
+        - BearerAuth: []
+      description: |
+        Create new book
+        ```
+        curl --location --request POST '`${url}`/api/v1/book' \
+            --header 'Content-Type: application/json' \
+            --header 'Authorization: Bearer {TOKEN} \
+            --data-raw '{
+                "title": "Python Book: The Ultimate Guide to Coding",
+                "author": "Amy Best",
+                "publisher": "Imagine Publishing",
+                "publication_year": "2016",
+                "genre": "",
+                "description": ""
+            }'
+        ```
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Book"
+
+      responses:
+        "200":
+          description: "Success response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Book"
+
+        "default":
+          description: |
+            ```
+            400 - Bad Request
+            401 - Unauthorized
+            403 - Forbidden
+            404 - Not Found
+            422 - Unprocessable Entity
+            500 - Error on server
+            ```
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    description: "error description"
+                    example: "Server Error"
+
+  /books/{title}:
+    parameters:
+      - name: title
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - Library
+      summary: Get books by title
+      security:
+        - BearerAuth: []
+      description: |
+        Get books by title in library
+        ```
+        curl --location --request GET '`${url}`/api/v1/book/{title}' \
+            --header 'Content-Type: application/json' \
+            --header 'Authorization: Bearer {TOKEN} \
+        ```
+      responses:
+        "200":
+          description: "Success response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Book"
+
+        "default":
+          description: |
+            ```
+            400 - Bad Request
+            401 - Unauthorized
+            403 - Forbidden
+            404 - Not Found
+            422 - Unprocessable Entity
+            500 - Error on server
+            ```
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    description: "error description"
+                    example: "Server Error"
+
+  /books/{author}:
+    parameters:
+      - name: author
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - Library
+      summary: Get books by author
+      security:
+        - BearerAuth: []
+      description: |
+        Get books by author in library
+        ```
+        curl --location --request GET '`${url}`/api/v1/book/{author}' \
+            --header 'Content-Type: application/json' \
+            --header 'Authorization: Bearer {TOKEN} \
+        ```
+      responses:
+        "200":
+          description: "Success response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Book"
+
+        "default":
+          description: |
+            ```
+            400 - Bad Request
+            401 - Unauthorized
+            403 - Forbidden
+            404 - Not Found
+            422 - Unprocessable Entity
+            500 - Error on server
+            ```
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    description: "error description"
+                    example: "Server Error"
+
+  /books/{book_id}:
+    parameters:
+      - name: book_id
+        in: path
+        required: true
+        schema:
+          type: string
+    put:
+      tags:
+        - Library
+      summary: "Edit Book"
+      security:
+        - BearerAuth: []
+      description: |
+        Edit book
+        ```
+        curl --location --request PUT '`${url}`/api/v1/book/{book_id}' \
+            --header 'Content-Type: application/json' \
+            --header 'Authorization: Bearer {TOKEN} \
+            --data-raw '{
+                "title": "Python Book: The Ultimate Guide to Coding",
+                "author": "Amy Best",
+                "publisher": "Imagine Publishing",
+                "publication_year": "2016",
+                "genre": "",
+                "description": ""
+            }'
+        ```
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Book"
+
+      responses:
+        "200":
+          description: "Edit Courses Success response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Book"
+
+        "default":
+          description: |
+            ```
+            400 - Bad Request
+            401 - Unauthorized
+            403 - Forbidden
+            404 - Not Found
+            422 - Unprocessable Entity
+            500 - Error on server
+            ```
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    description: "error description"
+                    example: "Server Error"
+
+    delete:
+      tags:
+        - Library
+      summary: Delete book
+      security:
+        - BearerAuth: []
+      description: |
+        Delete book
+        ```
+        curl --location --request DELETE '`${url}`/api/v1/book/{book_id}' \
+            --header 'Content-Type: application/json' \
+            --header 'Authorization: Bearer {TOKEN} \
+        ```
+      responses:
+        "200":
+          description: Book successfully deleted
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Success
+
+        "default":
+          description: |
+            ```
+            400 - Bad Request
+            401 - Unauthorized
+            403 - Forbidden
+            404 - Not Found
+            422 - Unprocessable Entity
+            500 - Error on server
+            ```
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: Resource not exist
+
+  /journal:
+    get:
+      tags:
+        - Library
+      summary: Get all journal
+      security:
+        - BearerAuth: []
+      description: |
+        Get all journal in library
+        ```
+        curl --location --request GET '`${url}`/api/v1/journal' \
+            --header 'Content-Type: application/json' \
+            --header 'Authorization: Bearer {TOKEN} \
+        ```
+      responses:
+        "200":
+          description: "Success response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Journal"
+
+        "default":
+          description: |
+            ```
+            400 - Bad Request
+            401 - Unauthorized
+            403 - Forbidden
+            404 - Not Found
+            422 - Unprocessable Entity
+            500 - Error on server
+            ```
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    description: "error description"
+                    example: "Server Error"
+
+    post:
+      tags:
+        - Library
+      summary: Add new journal
+      security:
+        - BearerAuth: []
+      description: |
+        Create new journal
+        ```
+        curl --location --request POST '`${url}`/api/v1/journal' \
+            --header 'Content-Type: application/json' \
+            --header 'Authorization: Bearer {TOKEN} \
+            --data-raw '{
+                "title": "Python - The Fastest Growing Programming Language",
+                "author": "K. R. Srinath",
+                "publication_year": "2017",
+                "description": ""
+            }'
+        ```
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Book"
+
+      responses:
+        "200":
+          description: "Success response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Book"
+
+        "default":
+          description: |
+            ```
+            400 - Bad Request
+            401 - Unauthorized
+            403 - Forbidden
+            404 - Not Found
+            422 - Unprocessable Entity
+            500 - Error on server
+            ```
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    description: "error description"
+                    example: "Server Error"
+
+  /journal/{title}:
+    parameters:
+      - name: title
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - Library
+      summary: Get journal by title
+      security:
+        - BearerAuth: []
+      description: |
+        Get journal by title in library
+        ```
+        curl --location --request GET '`${url}`/api/v1/journal/{title}' \
+            --header 'Content-Type: application/json' \
+            --header 'Authorization: Bearer {TOKEN} \
+        ```
+      responses:
+        "200":
+          description: "Success response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Journal"
+
+        "default":
+          description: |
+            ```
+            400 - Bad Request
+            401 - Unauthorized
+            403 - Forbidden
+            404 - Not Found
+            422 - Unprocessable Entity
+            500 - Error on server
+            ```
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    description: "error description"
+                    example: "Server Error"
+
+  /journal/{author}:
+    parameters:
+      - name: author
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - Library
+      summary: Get all journal
+      security:
+        - BearerAuth: []
+      description: |
+        Get all journal in library
+        ```
+        curl --location --request GET '`${url}`/api/v1/journal/{author}' \
+            --header 'Content-Type: application/json' \
+            --header 'Authorization: Bearer {TOKEN} \
+        ```
+      responses:
+        "200":
+          description: "Success response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Journal"
+
+        "default":
+          description: |
+            ```
+            400 - Bad Request
+            401 - Unauthorized
+            403 - Forbidden
+            404 - Not Found
+            422 - Unprocessable Entity
+            500 - Error on server
+            ```
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    description: "error description"
+                    example: "Server Error"
+
+  /journal/{journal_id}:
+    parameters:
+      - name: journal_id
+        in: path
+        required: true
+        schema:
+          type: string
+    put:
+      tags:
+        - Library
+      summary: "Edit Journal"
+      security:
+        - BearerAuth: []
+      description: |
+        Edit journal
+        ```
+        curl --location --request PUT '`${url}`/api/v1/journal/{journal_id}' \
+            --header 'Content-Type: application/json' \
+            --header 'Authorization: Bearer {TOKEN} \
+            --data-raw '{
+                "title": "Python - The Fastest Growing Programming Language",
+                "author": "K. R. Srinath",
+                "publication_year": "2017",
+                "description": ""
+            }'
+        ```
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Journal"
+
+      responses:
+        "200":
+          description: "Edit Courses Success response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Journal"
+
+        "default":
+          description: |
+            ```
+            400 - Bad Request
+            401 - Unauthorized
+            403 - Forbidden
+            404 - Not Found
+            422 - Unprocessable Entity
+            500 - Error on server
+            ```
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    description: "error description"
+                    example: "Server Error"
+
+    delete:
+      tags:
+        - Library
+      summary: Delete Journal
+      security:
+        - BearerAuth: []
+      description: |
+        Delete Journal
+        ```
+        curl --location --request DELETE '`${url}`/api/v1/journal/{journal_id}' \
+            --header 'Content-Type: application/json' \
+            --header 'Authorization: Bearer {TOKEN} \
+        ```
+      responses:
+        "200":
+          description: Journal successfully deleted
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Success
+
+        "default":
+          description: |
+            ```
+            400 - Bad Request
+            401 - Unauthorized
+            403 - Forbidden
+            404 - Not Found
+            422 - Unprocessable Entity
+            500 - Error on server
+            ```
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: Resource not exist
 
 components:
   schemas:
@@ -1650,6 +2292,54 @@ components:
           enum:
             - open
             - closed
+    Book:
+      type: object
+      required:
+        - title
+        - author
+        - publisher
+        - publication_year
+
+      properties:
+        title:
+          type: string
+          description: "Python Book: The Ultimate Guide to Coding"
+        author:
+          type: string
+          description: "Amy Best"
+        publisher:
+          type: string
+          description: "Imagine Publishing"
+        publication_year:
+          type: integer
+          description: "2016"
+        genre:
+          type: string
+          description: ""
+        description:
+          type: string
+          description: ""
+    
+    Journal:
+      type: object
+      required:
+        - title
+        - author
+        - publication_year
+
+      properties:
+        title:
+          type: string
+          description: "Python - The Fastest Growing Programming Language"
+        author:
+          type: string
+          description: "K. R. Srinath"
+        publication_year:
+          type: integer
+          description: "2017"
+        description:
+          type: string
+          description: ""
 
   securitySchemes:
     BearerAuth: # arbitrary name for the security scheme

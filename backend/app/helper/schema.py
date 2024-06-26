@@ -88,3 +88,24 @@ class ETicketSchema(ma.Schema):
     deskripsi = fields.String(required=True)
     pelapor = fields.String(required=True)
     status = fields.String(required=True)
+
+class LibrarySchema(ma.Schema):
+    id = fields.String(dump_only=True)
+    type= fields.String(required=True)
+    description= fields.String(required=False)
+    
+class BookSchema(ma.Schema):
+    id = fields.String(dump_only=True)
+    title= fields.String(required=True)
+    author= fields.String(required=True)
+    publisher= fields.String(required=True)
+    publication_year = fields.Integer(equired=True)
+    genre= fields.String(blank=True, null=True)
+    description= fields.String(required=False)
+
+class JournalSchema(ma.Schema):
+    id = fields.String(dump_only=True)
+    title= fields.String(required=True)
+    author= fields.String(required=True)
+    publication_year = fields.Integer(rquired=True)
+    description= fields.String(required=False)

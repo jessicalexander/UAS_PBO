@@ -10,5 +10,8 @@ billing_blueprint_api.add_resource(
     BillingListAPI, "/billings"
 )
 billing_blueprint_api.add_resource(
+    BillingListAPI, "/billings/<string:status>"
+)
+billing_blueprint_api.add_resource(
     BillingAPI, "/billing/<string:student_name>"
 )
