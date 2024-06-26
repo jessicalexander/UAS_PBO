@@ -81,3 +81,10 @@ class BillingSchema(ma.Schema):
     billing = fields.Integer(blank=True, null=True)
     description = fields.String(required=False)
     status = fields.String(required=False)
+
+class ETicketSchema(ma.Schema):
+    judul_laporan = fields.String(required=True)
+    tanggal_laporan = fields.Date(required=True)
+    deskripsi = fields.String(required=True)
+    pelapor = fields.String(required=True)
+    status = fields.String(required=True)

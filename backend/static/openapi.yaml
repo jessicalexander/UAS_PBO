@@ -30,6 +30,8 @@ tags:
     description: Endpoint for managing announcement
   - name: Billings
     description: Endpoint for managing billing
+  - name: ETicket
+    description: Endpoint for managin e-ticket
 
 paths:
   /user:
@@ -1297,6 +1299,138 @@ paths:
                     type: string
                     description: "error description"
                     example: "Server Error"
+  /eticket:
+    post:
+      tags:
+        - ETicket
+      summary: Cari atau Buat E-Ticket
+      security:
+        - BearerAuth: []
+      description: |
+        Cari e-ticket berdasarkan judul laporan atau tanggal laporan, atau buat e-ticket baru
+        ```
+        curl --location --request POST '`${url}`/api/v1/eticket' \
+            --header 'Content-Type: application/json' \
+            --data-raw '{
+                "judul_laporan": "string",
+                "tanggal_laporan": "string",
+                "deskripsi": "string",
+                "pelapor": "string"
+            }'
+        ```
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                judul_laporan:
+                  type: string
+                tanggal_laporan:
+                  type: string
+                deskripsi:
+                  type: string
+                pelapor:
+                  type: string
+      responses:
+        "200":
+          description: "Respon sukses"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ETicket"
+                type: object
+                properties:
+                  judul_laporan:
+                    type: string
+                  tanggal_laporan:
+                    type: string
+                  deskripsi:
+                    type: string
+                  pelapor:
+                    type: string
+        "default":
+          description: |
+            ```
+            400 - Permintaan Buruk
+            401 - Tidak Sah
+            403 - Dilarang
+            404 - Tidak Ditemukan
+            422 - Entitas Tidak Dapat Diproses
+            500 - Kesalahan pada server
+            ```
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    description: "deskripsi kesalahan"
+                    example: "Kesalahan Server"
+
+  /eticket/{id}:
+    delete:
+      tags:
+        - ETicket
+      summary: Hapus E-Ticket
+      security:
+        - BearerAuth: []
+      description: |
+        Hapus e-ticket berdasarkan ID
+        ```
+        curl --location --request DELETE '`${url}`/api/v1/eticket/{id}' \
+            --header 'Content-Type: application/json' \
+            --header 'Authorization: Bearer {TOKEN} \
+        ```
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "Respon sukses"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "ETicket deleted successfully"
+
+        "404":
+          description: "ETicket tidak ditemukan"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "ETicket not found"
+
+        "default":
+          description: |
+            ```
+            400 - Permintaan Buruk
+            401 - Tidak Sah
+            403 - Dilarang
+            422 - Entitas Tidak Dapat Diproses
+            500 - Kesalahan pada server
+            ```
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    description: "deskripsi kesalahan"
+                    example: "Kesalahan Server"
+
 
 components:
   schemas:
@@ -1487,6 +1621,35 @@ components:
         status:
           description: student's billing status ("paid" or "unpaid")
           type: string
+    
+    ETicket:
+      type: object
+      required:
+        - judul_laporan
+        - tanggal_laporan
+        - deskripsi
+        - pelapor
+        - status
+      properties:
+        judul_laporan:
+          type: string
+          description: "Judul laporan e-ticket"
+        tanggal_laporan:
+          type: string
+          format: date
+          description: "Tanggal laporan e-ticket"
+        deskripsi:
+          type: string
+          description: "Deskripsi e-ticket"
+        pelapor:
+          type: string
+          description: "Pelapor e-ticket"
+        status:
+          type: string
+          description: "Status e-ticket"
+          enum:
+            - open
+            - closed
 
   securitySchemes:
     BearerAuth: # arbitrary name for the security scheme
