@@ -28,7 +28,7 @@ tags:
     description: Endpoint for managing courses
   - name: Announcement
     description: Endpoint for managing announcement
-  - name: Billing
+  - name: Billings
     description: Endpoint for managing billing
 
 paths:
@@ -988,117 +988,315 @@ paths:
                     description: "error description"
                     example: "Server Error"
 
-#     post:
-#       tags:
-#         - Announcement
-#       summary: content
-#       description: |
-#         Create endpoint
-#         ```
-#         curl --location --request POST '`${url}`/api/v1/announcement' \
-#             --header 'Content-Type: application/json' \
-#             --data-raw '{
-#                 "content_announcement": "string"
-#             }'
-#         ```
-#       requestBody:
-#         content:
-#           application/json:
-#             schema:
-#               type: object
-#               properties:
-#                 content_announcement:
-#                   type: string
-#                 description:
-#                   type: string
-#       responses:
-#         "200":
-#           description: "Success response"
-#           content:
-#             application/json:
-#               schema:
-#                 $ref: "#/components/schemas/Announcementobject1"
-#                 type: object
-#                 properties:
-#                   username:
-#                     type: string
-#                   id:
-#                     type: string
-#         "default":
-#           description: |
-#             ```
-#             400 - Bad Request
-#             401 - Unauthorized
-#             403 - Forbidden
-#             404 - Not Found
-#             422 - Unprocessable Entity
-#             500 - Error on server
-#             ```
-#           content:
-#             application/json:
-#               schema:
-#                 $ref: "#/components/schemas/Announcementobject1"
-#                 type: object
-#                 properties:
-#                   detail:
-#                     type: string
-#                     description: "error description"
-#                     example: "Server Error"
-#   /calender_announcement:
-#     post:
-#         tags:
-#           - Announcement
-#         summary: calender
-#         description: |
-#           calender_announcement endpoint
-#           ```
-#           curl --location --request POST '`${url}`/api/v1/announcement' \
-#               --header 'Content-Type: application/json' \
-#               --data-raw '{
-#                   "calender_announcement": "date_type""
-#               }'
-#           ```
-#         requestBody:
-#           content:
-#             application/json:
-#               schema:
-#                 $ref: "#/components/schemas/Announcementobject2"
-#                 type: object
-#                 properties:
-#                   calender_announcement:
-#                     type: string
-#                   description:
-#                     type: string
-#         responses:
-#           "200":
-#             description: "Success response"
-#             content:
-#               application/json:
-#                 schema:
-#                   $ref: "#/components/schemas/Announcementobject2"
-#                   type: object
-#                   properties:
-#                     token:
-#                       type: string
-#           "default":
-#             description: |
-#               ```
-#               400 - Bad Request
-#               401 - Unauthorized
-#               403 - Forbidden
-#               404 - Not Found
-#               422 - Unprocessable Entity
-#               500 - Error on server
-#               ```
-#             content:
-#               application/json:
-#                 schema:
-#                   type: object
-#                   properties:
-#                     detail:
-#                       type: string
-#                       description: "error description"
-#                       example: "Server Error"
+    post:
+      tags:
+        - Announcement
+      summary: content
+      description: |
+        Create endpoint
+        ```
+        curl --location --request POST '`${url}`/api/v1/announcement' \
+            --header 'Content-Type: application/json' \
+            --data-raw '{
+                "content_announcement": "string"
+            }'
+        ```
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content_announcement:
+                  type: string
+                description:
+                  type: string
+      responses:
+        "200":
+          description: "Success response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Announcementobject1"
+                type: object
+                properties:
+                  username:
+                    type: string
+                  id:
+                    type: string
+        "default":
+          description: |
+            ```
+            400 - Bad Request
+            401 - Unauthorized
+            403 - Forbidden
+            404 - Not Found
+            422 - Unprocessable Entity
+            500 - Error on server
+            ```
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Announcementobject1"
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    description: "error description"
+                    example: "Server Error"
+  /calender_announcement:
+    post:
+        tags:
+          - Announcement
+        summary: calender
+        description: |
+          calender_announcement endpoint
+          ```
+          curl --location --request POST '`${url}`/api/v1/announcement' \
+              --header 'Content-Type: application/json' \
+              --data-raw '{
+                  "calender_announcement": "date_type""
+              }'
+          ```
+        requestBody:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Announcementobject2"
+                type: object
+                properties:
+                  calender_announcement:
+                    type: string
+                  description:
+                    type: string
+        responses:
+          "200":
+            description: "Success response"
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Announcementobject2"
+                  type: object
+                  properties:
+                    token:
+                      type: string
+          "default":
+            description: |
+              ```
+              400 - Bad Request
+              401 - Unauthorized
+              403 - Forbidden
+              404 - Not Found
+              422 - Unprocessable Entity
+              500 - Error on server
+              ```
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    detail:
+                      type: string
+                      description: "error description"
+                      example: "Server Error"
+
+  /billings:
+    get:
+      tags:
+        - Billings
+      summary: Get All Billings
+      security:
+        - BearerAuth: []
+      description: |
+        Get billing resource
+        ```
+        curl --location --request GET '`${url}`/api/v1/billings' \
+            --header 'Content-Type: application/json' \
+            --header 'Authorization: Bearer {TOKEN} \
+        ```
+      responses:
+        "200":
+          description: "Success response"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Billing"
+        "default":
+          description: |
+            ```
+            400 - Bad Request
+            401 - Unauthorized
+            403 - Forbidden
+            404 - Not Found
+            422 - Unprocessable Entity
+            500 - Error on server
+            ```
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    description: "error description"
+                    example: "Server Error"
+
+  /billing/{student_name}:
+    parameters:
+      - name: billings
+        in: path
+        required: true
+        schema:
+          type: string
+
+    post:
+      tags:
+        - Billings
+      summary: Add Billing
+      security:
+        - BearerAuth: []
+      description: |
+        Create new billing
+        ```
+        curl --location --request POST '`${url}`/api/v1/billing' \
+            --header 'Content-Type: application/json' \
+            --header 'Authorization: Bearer {TOKEN} \
+            --data-raw '{
+                "student_name": "joni",
+                "billing": "10000000",
+                "description": "billing semester 2",
+                "status": "unpaid"
+            }'
+        ```
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Billing"
+
+      responses:
+        "200":
+          description: "Success response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Billing"
+
+        "default":
+          description: |
+            ```
+            400 - Bad Request
+            401 - Unauthorized
+            403 - Forbidden
+            404 - Not Found
+            422 - Unprocessable Entity
+            500 - Error on server
+            ```
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    description: "error description"
+                    example: "Server Error"
+
+    delete:
+      tags:
+        - Billings
+      summary: Delete Billing by ID
+      security:
+        - BearerAuth: []
+      description: |
+        Delete Billing resource by ID
+        ```
+        curl --location --request DELETE '`${url}`/api/v1/billing/{student_name}' \
+            --header 'Content-Type: application/json' \
+            --header 'Authorization: Bearer {TOKEN} \
+        ```
+      responses:
+        "200":
+          description: Billing successfully deleted
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Success
+
+        "default":
+          description: |
+            ```
+            400 - Bad Request
+            401 - Unauthorized
+            403 - Forbidden
+            404 - Not Found
+            422 - Unprocessable Entity
+            500 - Error on server
+            ```
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: Resource not exist
+    put:
+      tags:
+        - Billings
+      summary: "Edit Billing"
+      security:
+        - BearerAuth: []
+      description: |
+        Edit the details of Course
+        ```
+        curl --location --request PUT '`${url}`/api/v1/billing/{student_name}' \
+            --header 'Content-Type: application/json' \
+            --header 'Authorization: Bearer {TOKEN} \
+            --data-raw '{
+                "student_name": "joni",
+                "billing": "10000000",
+                "description": "billing semester 2",
+                "status": "paid"
+            }'
+        ```
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Billing"
+
+      responses:
+        "200":
+          description: "Edit Billing Success response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Billing"
+
+        "default":
+          description: |
+            ```
+            400 - Bad Request
+            401 - Unauthorized
+            403 - Forbidden
+            404 - Not Found
+            422 - Unprocessable Entity
+            500 - Error on server
+            ```
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    description: "error description"
+                    example: "Server Error"
 
 components:
   schemas:
@@ -1233,7 +1431,62 @@ components:
           example: "date_type"
         description:
           type: string
-          example: "string"    
+          example: "string"
+
+    Announcementobject1:
+      type: object
+      required:
+          - content_announcement
+          - description
+      properties:
+        content_announcement:
+          type: string
+          example: "hai hai hari ini adalah pengumpulan terakhir UAS, JANGAN SAMPAI TERLEWAT YA!!"
+        description:
+          type: string
+          example: "string"
+    
+    Announcementobject2:
+      type: object
+      required:
+          - content_announcement
+          - description
+      properties:
+        calender_announcement:
+          type: string
+          example: "date_type"
+        description:
+          type: string
+          example: "string"
+  
+    ErrorResponse:
+      type: object
+      properties:
+        detail:
+          type: string
+          description: Error description
+          example: "Server Error"
+    
+    Billing:
+      type: object
+      required:
+        - student_name
+        - billing
+        - description
+        - status
+      properties:
+        student_name:
+          description: student's name
+          type: string
+        billing:
+          description: student's billing ammount
+          type: number
+        description:
+          description: billing description
+          type: string
+        status:
+          description: student's billing status ("paid" or "unpaid")
+          type: string
 
   securitySchemes:
     BearerAuth: # arbitrary name for the security scheme
