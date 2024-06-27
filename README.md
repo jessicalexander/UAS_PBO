@@ -7,6 +7,63 @@
 # Group Work Documentation:
 ![documentation](./documentation/documentation.png)
 
+### Quick start
+
+- To start and build the development flask backend:
+*note: every changes that is made, this command should be re-run
+```
+docker compose -f docker-compose.yaml up --build -d
+```
+Note: `docker compose` command is used in `Compose V2`. Supoosedly your version is `Compose V1` replace `docker compose` with `docker-compose`
+
+After successful run the dev server, you will be able to see all containers are running 
+```shell
+docker ps
+```
+check specific container
+```shell
+docker ps --filter name="name of the container" 
+```
+- To stop service
+```
+docker compose -f docker-compose.yaml down
+```
+*specify `-v` to remove the mongodb volume*
+
+- To remove all container
+```
+docker system prune
+```
+
+### Tech stack
+- Flask
+- MongoDB
+- Docker  
+
+References
+* flask_mongoengine -> MongoDB connector ([docs](https://docs.mongoengine.org/# "docs"))
+  * flask_jwt_extended -> JWT Token
+- MongoDB ([docs](https://github.com/docker-library/docs/tree/master/mongo "docs"))
+
+- Marshmallow -> Schema Validator ([docs](https://marshmallow.readthedocs.io/en/stable/index.html "docs"))
+- Docker
+
+
+### Debugging
+
+1. rebuild your development with:
+```
+docker compose -f docker-compose.yaml up --build -d
+```
+2. check your container name using:
+```shell
+docker ps
+```
+3. Try and debug your error from docker logs:
+```shell
+docker logs 'container name'
+```
+
 # Requirement Analysis of UKRIDA PORTAL SYSTEM
 ## Functionality
 - **Capability**: The system should support different user roles (students, professors, librarians and admin) with role-specific functionalities. For students, this will include viewing grades, class schedule, exam schedule, attendance, billings, courses and course materials as well as other neccesity namely joining courses and submiting certificates. Professors would need to teach course, post grades, attendance, exam schedule and course materials. Librarians would need to be able to add books to the E-library and, record borrow and return of physical books. Admins would register the professor's, librarian's, and student's accounts, create and assign the professors to a class, input billings, update student's semester, add courses to KRS packages, post announcement in the portal, view tickets, and clear backlogs.
