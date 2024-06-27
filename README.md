@@ -7,6 +7,24 @@
 # Group Work Documentation:
 ![documentation](./documentation/documentation.png)
 
+### Swagger-UI
+1. visit [Backend Service for UKRIDA Portal System](https://jessicalexander.github.io/UAS_PBO/)
+2. change
+```
+serverip = 127.0.0.1
+port = 5003
+```
+3. register an account or simply login with our existing account in the 'User' tab
+existing account:
+```
+{
+    "username" : "siwp_admin",
+    "password" : "siwp_password"
+}
+```
+4. copy the token produced in the request body after login and paste into authorize > value
+5. Once authorize, you are free to test out any backend service we provided
+
 ### Quick start
 
 - To start and build the development flask backend:
