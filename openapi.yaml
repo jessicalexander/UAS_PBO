@@ -1353,55 +1353,39 @@ paths:
                     description: "error description"
                     example: "Server Error"
   /eticket:
-    post:
+    get:
       tags:
         - ETicket
-      summary: Cari atau Buat E-Ticket
+      summary: Ambil semua E-Ticket atau cari berdasarkan kriteria
       security:
         - BearerAuth: []
       description: |
-        Cari e-ticket berdasarkan judul laporan atau tanggal laporan, atau buat e-ticket baru
+        Ambil daftar semua e-ticket atau cari berdasarkan judul laporan atau tanggal laporan.
         ```
-        curl --location --request POST '`${url}`/api/v1/eticket' \
-            --header 'Content-Type: application/json' \
-            --data-raw '{
-                "judul_laporan": "string",
-                "tanggal_laporan": "string",
-                "deskripsi": "string",
-                "pelapor": "string"
-            }'
+        curl --location --request GET '`${url}`/api/v1/eticket' \
+            --header 'Authorization: Bearer {TOKEN}'
         ```
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                judul_laporan:
-                  type: string
-                tanggal_laporan:
-                  type: string
-                deskripsi:
-                  type: string
-                pelapor:
-                  type: string
+      parameters:
+        - name: judul_laporan
+          in: query
+          schema:
+            type: string
+            description: Judul laporan e-ticket
+        - name: tanggal_laporan
+          in: query
+          schema:
+            type: string
+            format: date
+            description: Tanggal laporan e-ticket
       responses:
         "200":
           description: "Respon sukses"
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ETicket"
-                type: object
-                properties:
-                  judul_laporan:
-                    type: string
-                  tanggal_laporan:
-                    type: string
-                  deskripsi:
-                    type: string
-                  pelapor:
-                    type: string
+                type: array
+                items:
+                  $ref: "#/components/schemas/ETicket"
         "default":
           description: |
             ```
@@ -1415,20 +1399,53 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  detail:
-                    type: string
-                    description: "deskripsi kesalahan"
-                    example: "Kesalahan Server"
-
+                $ref: "#/components/schemas/ErrorResponse"
+    post:
+      tags:
+        - ETicket
+      summary: Cari atau Buat E-Ticket
+      security:
+        - BearerAuth: []
+      description: |
+        Cari e-ticket berdasarkan judul laporan atau tanggal laporan, atau buat e-ticket baru.
+        ```
+        curl --location --request POST '`${url}`/api/v1/eticket' \
+            --header 'Content-Type: application/json' \
+            --header 'Authorization: Bearer {TOKEN}' \
+            --data-raw '{
+                "judul_laporan": "string",
+                "tanggal_laporan": "string",
+                "deskripsi": "string",
+                "pelapor": "string"
+            }'
+        ```
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ETicket"
+      responses:
+        "200":
+          description: "Respon sukses"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ETicket"
+        "default":
+          description: |
+            ```
+            400 - Permintaan Buruk
+            401 - Tidak Sah
+            403 - Dilarang
+            404 - Tidak Ditemukan
+            422 - Entitas Tidak Dapat Diproses
+            500 - Kesalahan pada server
+            ```
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
   /eticket/{id}:
-    parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
     delete:
       tags:
         - ETicket
@@ -1436,11 +1453,11 @@ paths:
       security:
         - BearerAuth: []
       description: |
-        Hapus e-ticket berdasarkan ID
+        Hapus e-ticket berdasarkan ID.
         ```
         curl --location --request DELETE '`${url}`/api/v1/eticket/{id}' \
             --header 'Content-Type: application/json' \
-            --header 'Authorization: Bearer {TOKEN} \
+            --header 'Authorization: Bearer {TOKEN}'
         ```
       parameters:
         - name: id
@@ -1459,7 +1476,6 @@ paths:
                   message:
                     type: string
                     example: "ETicket deleted successfully"
-
         "404":
           description: "ETicket tidak ditemukan"
           content:
@@ -1470,7 +1486,6 @@ paths:
                   message:
                     type: string
                     example: "ETicket not found"
-
         "default":
           description: |
             ```
@@ -1483,12 +1498,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  detail:
-                    type: string
-                    description: "deskripsi kesalahan"
-                    example: "Kesalahan Server"
+                $ref: "#/components/schemas/ErrorResponse"
   
   /books:
     get:
