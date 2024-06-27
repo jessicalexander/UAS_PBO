@@ -1,4 +1,5 @@
 from utils import db
+from mongoengine import Document, StringField, DateField
 
 class ETicket(db.Document):
     judul_laporan = db.StringField(required=True)
